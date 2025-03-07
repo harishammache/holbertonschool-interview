@@ -20,6 +20,60 @@ static void print_grid(int grid[3][3])
 }
 
 /**
+ * is_stable - Checks if a 3x3 sandpile is stable
+ * @grid: The 3x3 sandpile to check
+ * Return: True or False
+ */
+static bool is_stable(int grid[3][3])
+{
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (grid[i][j] > 3)
+				return (false);
+		}
+	}
+	return (true);
+}
+
+/**
+ * topple - Performs a toppling step on a 3x3 sandpile
+ * @grid: The 3x3 sandpile to stabilize
+ * Return: Nothing
+ */
+static void topple(int grid[3][3])
+{
+	int grid_tmp[3][3] = {0};
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (grid[i][j] > 3)
+			{
+				grid_tmp[i][j] -= 4;
+				if (i > 0)
+					grid_tmp[i - 1][j] += 1;
+				if (i < 2)
+					grid_tmp[i + 1][j] += 1;
+				if (j > 0)
+					grid_tmp[i][j - 1] += 1;
+				if (j < 2)
+					grid_tmp[i][j + 1] += 1;
+			}
+		}
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+			grid[i][j] += grid_tmp[i][j];
+	}
+}
+
+
+/**
  * sandpiles_sum - calculate the sum of two piles of sand
  * @grid1: first grid
  * @grid2: second grid
@@ -28,7 +82,6 @@ static void print_grid(int grid[3][3])
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	int i, j;
-	bool stable = false;
 
 	for (i = 0; i < 3; i++)
 	{
@@ -36,43 +89,10 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 			grid1[i][j] += grid2[i][j];
 	}
 
-	stable = false;
-	while (!stable)
+	while (!is_stable(grid1))
 	{
-		stable = true;
-		for (i = 0; i < 3; i++)
-		{
-			for (j = 0; j < 3; j++)
-			{
-				if (grid1[i][j] > 3)
-				{
-					printf("=\n");
-					print_grid(grid1);
-
-					grid1[i][j] -= 4;
-					if (i < 2)
-					{
-						grid1[i + 1][j]++;
-						stable = false;
-					}
-					if (i > 0)
-					{
-						grid1[i - 1][j]++;
-						stable = false;
-					}
-					if (j < 2)
-					{
-						grid1[i][j + 1]++;
-						stable = false;
-					}
-					if (j > 0)
-					{
-						grid1[i][j - 1]++;
-						stable = false;
-					}
-				}
-			}
-		}
+		printf("=\n");
+		print_grid(grid1);
+		topple(grid1);
 	}
 }
-

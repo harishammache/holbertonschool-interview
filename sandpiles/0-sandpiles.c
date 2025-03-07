@@ -36,6 +36,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 			grid1[i][j] += grid2[i][j];
 	}
 
+	stable = false;
 	while (!stable)
 	{
 		stable = true;

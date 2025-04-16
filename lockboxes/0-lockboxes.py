@@ -16,9 +16,9 @@ def canUnlockAll(boxes):
 
         if cle < n and cle not in boites_ouvertes:
             boites_ouvertes.add(cle)
-        for nouvelle_cle in boxes[cle]:
-            if nouvelle_cle not in boites_ouvertes:
-                cles_a_explorer.append(nouvelle_cle)
+            for nouvelle_cle in boxes[cle]:
+                if nouvelle_cle not in boites_ouvertes:
+                    cles_a_explorer.append(nouvelle_cle)
 
     if len(boites_ouvertes) == n:
         return True

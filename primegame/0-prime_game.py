@@ -1,4 +1,3 @@
-# filepath: 
 #!/usr/bin/python3
 """
 Prime Game Module
@@ -16,7 +15,7 @@ def isWinner(x, nums):
     ben_wins = 0
 
     n = max(nums)
-    
+
     primes = [True for _ in range(max(n + 1, 2))]
     for i in range(2, int(n**0.5) + 1):
         if primes[i]:

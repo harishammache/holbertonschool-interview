@@ -23,6 +23,7 @@ def is_safe(solution, row, col):
             return False
     return True
 
+
 def solve_nqueens(N, row=0, solution=[]):
     """Backtracking to find all solutions"""
     if row == N:
@@ -31,5 +32,6 @@ def solve_nqueens(N, row=0, solution=[]):
     for col in range(N):
         if is_safe(solution, row, col):
             solve_nqueens(N, row + 1, solution + [col])
+
 
 solve_nqueens(N)

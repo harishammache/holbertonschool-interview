@@ -52,7 +52,7 @@ void merge_sort_recursive(int *array, int left, int right, int *temp)
 {
 	if (left < right)
 	{
-		int mid = (left + right) / 2;
+		int mid = left + (right - left - 1) / 2;
 
 		merge_sort_recursive(array, left, mid, temp);
 		merge_sort_recursive(array, mid + 1, right, temp);

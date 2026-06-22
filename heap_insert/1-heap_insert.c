@@ -2,17 +2,24 @@
 #include "binary_trees.h"
 
 /**
- * swap_nodes - swap values of two nodes
+ * swap_nodes - Swap the values of two heap nodes
+ * @a: First node
+ * @b: Second node
  */
 static void swap_nodes(heap_t *a, heap_t *b)
 {
-	int tmp = a->n;
+	int tmp;
+
+	tmp = a->n;
 	a->n = b->n;
 	b->n = tmp;
 }
 
 /**
- * heapify_up - restore max heap property going up
+ * heapify_up - Restore max heap property going up
+ * @node: Node to heapify
+ *
+ * Return: Final position of the node
  */
 static heap_t *heapify_up(heap_t *node)
 {
@@ -21,17 +28,23 @@ static heap_t *heapify_up(heap_t *node)
 		swap_nodes(node, node->parent);
 		node = node->parent;
 	}
+
 	return (node);
 }
 
 /**
- * find_insert_position - BFS to find insertion point
+ * find_insert_position - Find next available position in heap (BFS)
+ * @root: Pointer to root of heap
+ *
+ * Return: Parent node where insertion should occur
  */
 static heap_t *find_insert_position(heap_t *root)
 {
 	heap_t **queue;
-	int front = 0, back = 0, size = 1024;
 	heap_t *tmp;
+	int front = 0;
+	int back = 0;
+	int size = 1024;
 
 	queue = malloc(sizeof(heap_t *) * size);
 	if (!queue)
@@ -58,11 +71,16 @@ static heap_t *find_insert_position(heap_t *root)
 }
 
 /**
- * heap_insert - inserts a value into a Max Binary Heap
+ * heap_insert - Inserts a value into a Max Binary Heap
+ * @root: Double pointer to root node
+ * @value: Value to insert
+ *
+ * Return: Pointer to inserted node, or NULL on failure
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-	heap_t *node, *parent;
+	heap_t *node;
+	heap_t *parent;
 
 	if (!root)
 		return (NULL);
@@ -88,5 +106,5 @@ heap_t *heap_insert(heap_t **root, int value)
 	else
 		parent->right = node;
 
-	return heapify_up(node);
+	return (heapify_up(node));
 }
